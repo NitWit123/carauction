@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Car Controls 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100vh;
+            background-color: #1a1a1a;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .controls-container {
+            width: 350px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #444;
+        }
+
+        .controls-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 15px 20px;
+            border-bottom: 2px solid #444;
+            position: relative;
+        }
+
+        .header-title {
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-icon {
+            background: #f1c40f;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .controls-list {
+            padding: 0;
+            background: #2a2a2a;
+        }
+
+        .control-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            border-bottom: 1px solid #3a3a3a;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .control-item:hover {
+            background: rgba(241, 196, 15, 0.1);
+        }
+
+        .control-item:last-child {
+            border-bottom: none;
+        }
+
+        .control-label {
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .control-key {
+            background: #f1c40f;
+            color: #000;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            min-width: 50px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .controls-footer {
+            background: #1a1a1a;
+            padding: 12px 20px;
+            border-top: 1px solid #444;
+            text-align: center;
+        }
+
+        .footer-text {
+            color: #888;
+            font-family: 'Roboto', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .footer-key {
+            background: #f1c40f;
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 10px;
+        }
+
+        /* Active state for control items */
+        .control-item.active {
+            background: rgba(241, 196, 15, 0.2);
+            border-left: 3px solid #f1c40f;
+        }
+
+        .control-item.active .control-label {
+            color: #f1c40f;
+        }
+
+        /* Animation for key press feedback */
+        .control-key.pressed {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
+        }
+
+        /* Notification system */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .notification {
+            background: rgba(25, 25, 25, 0.95);
+            border: 1px solid #f1c40f;
+            padding: 12px 16px;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 12px;
+            margin-bottom: 8px;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="controls-container" id="controlsContainer">
+        <div class="controls-header">
+            <div class="header-title">
+                <div class="header-icon">2</div>
+                Remote Car Controls 2
+            </div>
+        </div>
+
+        <div class="controls-list" id="controlsList">
+            <div class="control-item" data-action="drive" data-key="wasd">
+                <span class="control-label">Drive</span>
+                <span class="control-key">WASD</span>
+            </div>
+            <div class="control-item" data-action="brake" data-key="space">
+                <span class="control-label">Brake</span>
+                <span class="control-key">Space</span>
+            </div>
+            <div class="control-item" data-action="boost" data-key="shift">
+                <span class="control-label">Boost</span>
+                <span class="control-key">Shift</span>
+            </div>
+            <div class="control-item" data-action="camera" data-key="c">
+                <span class="control-label">Camera</span>
+                <span class="control-key">C</span>
+            </div>
+            <div class="control-item" data-action="noclip" data-key="f">
+                <span class="control-label">Noclip</span>
+                <span class="control-key">F</span>
+            </div>
+            <div class="control-item" data-action="fly_up" data-key="q">
+                <span class="control-label">Fly Up</span>
+                <span class="control-key">Q</span>
+            </div>
+            <div class="control-item" data-action="fly_down" data-key="z">
+                <span class="control-label">Fly Down</span>
+                <span class="control-key">Z</span>
+            </div>
+            <div class="control-item" data-action="repair" data-key="r">
+                <span class="control-label">Repair</span>
+                <span class="control-key">R</span>
+            </div>
+            <div class="control-item" data-action="exit" data-key="x">
+                <span class="control-label">Exit</span>
+                <span class="control-key">X</span>
+            </div>
+        </div>
+
+        <div class="controls-footer">
+            <div class="footer-text">
+                <span class="footer-key">F6</span>
+                to toggle
+            </div>
+        </div>
+    </div>
+
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <script>
+        let isControlsVisible = true;
+        const controlsContainer = document.getElementById('controlsContainer');
+        const controlsList = document.getElementById('controlsList');
+        const notificationContainer = document.getElementById('notificationContainer');
+
+        // Function to send NUI message to Lua
+        function sendNuiMessage(action, data = {}) {
+            const resourceName = 'basic-gamemode'; // Change this to your resource name
+            
+            console.log(`[HTML] Sending NUI message: ${action}`, data);
+            
+            fetch(`https://${resourceName}/${action}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: JSON.stringify(data)
+            }).then(resp => {
+                if (resp.ok && resp.headers.get('Content-Type')?.includes('application/json')) {
+                    return resp.json();
+                } else {
+                    return {};
+                }
+            }).then(resp => {
+                console.log(`[HTML] NUI Response for ${action}:`, resp);
+            }).catch(error => {
+                console.error(`[HTML] Error sending NUI message ${action}:`, error);
+            });
+        }
+
+        // Function to show notifications
+        function showNotification(message, duration = 3000) {
+            const notification = document.createElement('div');
+            notification.classList.add('notification');
+            notification.textContent = message;
+            
+            notificationContainer.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, duration);
+        }
+
+        // Function to highlight active control
+        function setActiveControl(action) {
+            const items = document.querySelectorAll('.control-item');
+            items.forEach(item => {
+                if (item.dataset.action === action) {
+                    item.classList.add('active');
+                    setTimeout(() => {
+                        item.classList.remove('active');
+                    }, 500);
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // Function to animate key press
+        function animateKeyPress(key) {
+            const items = document.querySelectorAll('.control-item');
+            items.forEach(item => {
+                if (item.dataset.key.toLowerCase().includes(key.toLowerCase())) {
+                    const keyElement = item.querySelector('.control-key');
+                    keyElement.classList.add('pressed');
+                    setTimeout(() => {
+                        keyElement.classList.remove('pressed');
+                    }, 150);
+                }
+            });
+        }
+
+        // Add click event listeners to control items
+        controlsList.addEventListener('click', function(event) {
+            const controlItem = event.target.closest('.control-item');
+            if (controlItem) {
+                const action = controlItem.dataset.action;
+                const key = controlItem.dataset.key;
+                
+                console.log(`[HTML] Control clicked: ${action} (${key})`);
+                
+                // Send action to Lua
+                sendNuiMessage('controlAction', {
+                    action: action,
+                    key: key
+                });
+                
+                // Visual feedback
+                setActiveControl(action);
+                showNotification(`${action.replace('_', ' ')} activated!`);
+            }
+        });
+
+        // Listen for messages from Lua
+        window.addEventListener('message', function(event) {
+            const data = event.data;
+            console.log("[HTML] Received message from NUI:", data);
+            
+            if (data.type === "showControls") {
+                controlsContainer.style.display = 'block';
+                isControlsVisible = true;
+                console.log("[HTML] Controls shown.");
+            } else if (data.type === "hideControls") {
+                controlsContainer.style.display = 'none';
+                isControlsVisible = false;
+                console.log("[HTML] Controls hidden.");
+            } else if (data.type === "keyPressed" && isControlsVisible) {
+                console.log(`[HTML] Key pressed event: ${data.key}`);
+                animateKeyPress(data.key);
+                
+                // Find matching control and activate it
+                const items = document.querySelectorAll('.control-item');
+                items.forEach(item => {
+                    if (item.dataset.key.toLowerCase().includes(data.key.toLowerCase())) {
+                        const action = item.dataset.action;
+                        setActiveControl(action);
+                        
+                        // Send action to Lua
+                        sendNuiMessage('controlAction', {
+                            action: action,
+                            key: data.key
+                        });
+                    }
+                });
+            } else if (data.type === "notification") {
+                showNotification(data.message, data.duration || 3000);
+            }
+        });
+
+        // Initialize the interface
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("[HTML] Remote Car Controls 2 initialized.");
+            
+            // Initially hide the controls
+            controlsContainer.style.display = 'none';
+            isControlsVisible = false;
+            
+            // Send ready message to Lua
+            sendNuiMessage('htmlReady');
+        });
+
+        // Handle ESC key to close
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && isControlsVisible) {
+                sendNuiMessage('hideControls');
+            }
+        });
+    </script>
+</body>
+</html>
