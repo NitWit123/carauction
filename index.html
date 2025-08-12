@@ -30,13 +30,13 @@
 
         .help-box {
             width: 280px;
-            background: transparent !important; /* شيل الخلفية السوداء نهائياً */
-            backdrop-filter: none; /* شيل البلور */
+            background: rgba(64, 64, 64, 0.9); /* خلفية رصاصية بدون أسود */
+            backdrop-filter: blur(8px);
             border-radius: 12px;
-            padding: 16px; /* رجع للـ padding الأصلي */
+            padding: 0; /* شيل الـ padding الداخلي نهائياً */
             border: 1px solid rgba(251, 191, 36, 0.3);
             position: relative;
-            box-shadow: none; /* شيل الظلال */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .help-box::before {
@@ -146,61 +146,63 @@
     </style>
 </head>
 <body>
-    <div class="help-box">
+        <div class="help-box">
         <div class="logo">
             <img src="https://via.placeholder.com/28x28/facc15/1e293b?text=C" alt="Logo">
         </div>
-        <div class="title">REMOTE CAR CONTROLS 2</div>
+        <div style="padding: 16px;"> <!-- Wrapper مع padding بدلاً من الـ box نفسه -->
+            <div class="title">REMOTE CAR CONTROLS 2</div>
 
-        <div class="control">
-            <span>Drive</span>
-            <span class="key">WASD</span>
-        </div>
+            <div class="control">
+                <span>Drive</span>
+                <span class="key">WASD</span>
+            </div>
 
-        <div class="control">
-            <span>Brake</span>
-            <span class="key">Space</span>
-        </div>
+            <div class="control">
+                <span>Brake</span>
+                <span class="key">Space</span>
+            </div>
 
-        <div class="control">
-            <span>Boost</span>
-            <span class="key">Shift</span>
-        </div>
+            <div class="control">
+                <span>Boost</span>
+                <span class="key">Shift</span>
+            </div>
 
-        <div class="control">
-            <span>Camera</span>
-            <span class="key">G</span>
-        </div>
+            <div class="control">
+                <span>Camera</span>
+                <span class="key">G</span>
+            </div>
 
-        <div class="control">
-            <span>Noclip</span>
-            <span class="key">F</span>
-        </div>
+            <div class="control">
+                <span>Noclip</span>
+                <span class="key">F</span>
+            </div>
 
-        <div class="control">
-            <span>Fly Up</span>
-            <span class="key">Q</span>
-        </div>
+            <div class="control">
+                <span>Fly Up</span>
+                <span class="key">Q</span>
+            </div>
 
-        <div class="control">
-            <span>Fly Down</span>
-            <span class="key">Z</span>
-        </div>
+            <div class="control">
+                <span>Fly Down</span>
+                <span class="key">Z</span>
+            </div>
 
-        <div class="control">
-            <span>Repair</span>
-            <span class="key">R</span>
-        </div>
+            <div class="control">
+                <span>Repair</span>
+                <span class="key">R</span>
+            </div>
 
-        <div class="control">
-            <span>Exit</span>
-            <span class="key">X</span>
-        </div>
+            <div class="control">
+                <span>Exit</span>
+                <span class="key">X</span>
+            </div>
 
-        <div class="footer">
-            <div class="toggle-hint">
-                <div class="status-dot"></div>
-                <span>F6 to toggle</span>
+            <div class="footer">
+                <div class="toggle-hint">
+                    <div class="status-dot"></div>
+                    <span>F6 to toggle</span>
+                </div>
             </div>
         </div>
     </div>
