@@ -16,15 +16,12 @@
             font-family: 'Inter', sans-serif;
             background: transparent !important;
             background-color: transparent !important;
-            overflow: hidden;
             height: 100vh;
             width: 100vw;
-        }
-
-        body {
+            overflow: hidden;
             display: flex;
             align-items: center;
-            justify-content: center; /* Set to center */
+            justify-content: flex-start;
         }
 
         .help-box {
@@ -32,7 +29,7 @@
             background: rgba(64, 64, 64, 0.9);
             backdrop-filter: blur(8px);
             border-radius: 12px;
-            padding: 16px; /* Padding is back on the main box */
+            padding: 0; /* تم إزالة الـ padding من هنا */
             border: 1px solid rgba(251, 191, 36, 0.3);
             position: relative;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -67,6 +64,11 @@
             height: 100%;
             border-radius: 5px;
             object-fit: cover;
+        }
+        
+        /* هذا هو العنصر الجديد الذي يضيف المسافة الداخلية */
+        .content-wrapper {
+            padding: 16px;
         }
 
         .title {
@@ -149,57 +151,58 @@
         <div class="logo">
             <img src="https://via.placeholder.com/28x28/facc15/1e293b?text=C" alt="Logo">
         </div>
-        <div class="title">REMOTE CAR CONTROLS 2</div>
+        <div class="content-wrapper"> <div class="title">REMOTE CAR CONTROLS 2</div>
 
-        <div class="control">
-            <span>Drive</span>
-            <span class="key">WASD</span>
-        </div>
+            <div class="control">
+                <span>Drive</span>
+                <span class="key">WASD</span>
+            </div>
 
-        <div class="control">
-            <span>Brake</span>
-            <span class="key">Space</span>
-        </div>
+            <div class="control">
+                <span>Brake</span>
+                <span class="key">Space</span>
+            </div>
 
-        <div class="control">
-            <span>Boost</span>
-            <span class="key">Shift</span>
-        </div>
+            <div class="control">
+                <span>Boost</span>
+                <span class="key">Shift</span>
+            </div>
 
-        <div class="control">
-            <span>Camera</span>
-            <span class="key">G</span>
-        </div>
+            <div class="control">
+                <span>Camera</span>
+                <span class="key">G</span>
+            </div>
 
-        <div class="control">
-            <span>Noclip</span>
-            <span class="key">F</span>
-        </div>
+            <div class="control">
+                <span>Noclip</span>
+                <span class="key">F</span>
+            </div>
 
-        <div class="control">
-            <span>Fly Up</span>
-            <span class="key">Q</span>
-        </div>
+            <div class="control">
+                <span>Fly Up</span>
+                <span class="key">Q</span>
+            </div>
 
-        <div class="control">
-            <span>Fly Down</span>
-            <span class="key">Z</span>
-        </div>
+            <div class="control">
+                <span>Fly Down</span>
+                <span class="key">Z</span>
+            </div>
 
-        <div class="control">
-            <span>Repair</span>
-            <span class="key">R</span>
-        </div>
+            <div class="control">
+                <span>Repair</span>
+                <span class="key">R</span>
+            </div>
 
-        <div class="control">
-            <span>Exit</span>
-            <span class="key">X</span>
-        </div>
-
-        <div class="footer">
-            <div class="toggle-hint">
-                <div class="status-dot"></div>
-                <span>F6 to toggle</span>
+            <div class="control">
+                <span>Exit</span>
+                <span class="key">X</span>
+            </div>
+            
+            <div class="footer">
+                <div class="toggle-hint">
+                    <div class="status-dot"></div>
+                    <span>F6 to toggle</span>
+                </div>
             </div>
         </div>
     </div>
