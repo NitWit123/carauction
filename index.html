@@ -13,16 +13,13 @@
         }
 
         body {
+            /* إزالة خصائص التوسيط والخلفية من هنا */
             font-family: 'Inter', sans-serif;
-            background: rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            background: transparent;
         }
 
         .menu-container {
+            /* إضافة الخلفية هنا مباشرةً */
             background: rgba(45, 45, 45, 0.95);
             border-radius: 6px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -30,6 +27,12 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             width: 250px;
             overflow: hidden;
+            
+            /* توسيط القائمة في منتصف الشاشة */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .menu-header {
@@ -140,11 +143,11 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: translate(-50%, -50%) scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translate(-50%, -50%) scale(1);
             }
         }
 
