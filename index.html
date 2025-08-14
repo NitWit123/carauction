@@ -3,316 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remote Car Controls 2</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Car Controls</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            /* إزالة خصائص التوسيط والخلفية من هنا */
             font-family: 'Inter', sans-serif;
             background: transparent;
-        }
-
-        .menu-container {
-            /* إضافة الخلفية هنا مباشرةً */
-            background: rgba(45, 45, 45, 0.95);
-            border-radius: 6px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 250px;
+            margin: 0;
+            padding: 0;
+            color: #f8f8f8;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            height: 100vh;
             overflow: hidden;
-            
-            /* توسيط القائمة في منتصف الشاشة */
+        }
+
+        .help-box {
+            width: 260px;
+            background: rgba(22, 22, 22, 0.9);
+            border-radius: 14px;
+            padding: 11px 16px;
+            border: 1px solid rgba(250, 204, 21, 0.3);
+            position: relative;
+            margin-top: 10%; /* مرفوع للأعلى */
+            overflow: hidden;
+        }
+
+        /* تأثير الموجة */
+        .wave-effect {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                rgba(255, 255, 255, 0.0) 0%,
+                rgba(255, 255, 255, 0.12) 40%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.12) 60%,
+                rgba(255, 255, 255, 0.0) 100%
+            );
+            transform: skewX(-25deg);
+            animation: waveAnimation 2.5s infinite;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
         }
 
-        .menu-header {
-            background: rgba(35, 35, 35, 0.9);
-            padding: 8px 12px;
+        @keyframes waveAnimation {
+            0% { left: -75%; }
+            100% { left: 130%; }
+        }
+
+        /* السطر العلوي */
+        .header {
             display: flex;
-            align-items: center;
-            gap: 6px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .menu-icon {
-            width: 16px;
-            height: 16px;
-            background: #FFD700;
-            border-radius: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: #000;
-            font-weight: 600;
-        }
-
-        .menu-title {
-            color: #FFD700;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .menu-items {
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 6px 12px;
-            color: #E5E5E5;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border-left: 2px solid transparent;
-        }
-
-        .menu-item:hover {
-            background: rgba(255, 215, 0, 0.1);
-            border-left-color: #FFD700;
-            color: #FFD700;
-        }
-
-        .menu-item.selected {
-            background: rgba(255, 215, 0, 0.15);
-            border-left-color: #FFD700;
-            color: #FFD700;
-        }
-
-        .item-label {
-            flex: 1;
-        }
-
-        .key-binding {
-            background: #FFD700;
-            color: #000;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 10px;
-            font-weight: 600;
-            min-width: 35px;
-            text-align: center;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        .menu-footer {
-            background: rgba(35, 35, 35, 0.9);
-            padding: 6px 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 3px;
+            margin-bottom: 11px;
+            position: relative;
+            z-index: 2;
         }
 
-        .footer-text {
-            color: #888;
-            font-size: 10px;
-            font-weight: 500;
-        }
-
-        .footer-key {
-            color: #FFD700;
+        .title {
+            color: #fef08a;
+            font-size: 17px;
             font-weight: 600;
+            letter-spacing: -0.02em;
+            text-shadow: 0 0 4px rgba(254, 226, 80, 0.3);
         }
 
-        /* Glowing effect for selected item */
-        .menu-item.selected .key-binding {
-            box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+        .logo-wrapper {
+            position: relative;
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            border: 2px solid #facc15;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+            animation: glowPulse 2s infinite ease-in-out;
+            z-index: 2;
+            overflow: hidden;
         }
 
-        /* Subtle animation */
-        .menu-container {
-            animation: fadeIn 0.3s ease-out;
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 12px rgba(255, 215, 0, 0.6); }
+            50% { box-shadow: 0 0 24px rgba(255, 215, 0, 1); }
+            100% { box-shadow: 0 0 12px rgba(255, 215, 0, 0.6); }
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
+        .logo {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
         }
 
-        /* Custom scrollbar */
-        .menu-items::-webkit-scrollbar {
-            width: 6px;
+        .control {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            margin-bottom: 7px;
+            font-size: 13.5px;
+            color: #e2e8f0;
+            font-weight: 400;
+            line-height: 1.2;
+            position: relative;
+            z-index: 2;
         }
 
-        .menu-items::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
+        .control span:first-child {
+            text-align: left;
+            padding-left: 1px;
         }
 
-        .menu-items::-webkit-scrollbar-thumb {
-            background: rgba(255, 215, 0, 0.3);
-            border-radius: 3px;
+        .key {
+            background: #facc15;
+            color: #1e293b;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 11px;
+            text-align: center;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+            justify-self: end;
+            min-width: 60px;
+            box-shadow: 0 0 6px 0 rgba(250, 204, 21, 0.4);
         }
 
-        .menu-items::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 215, 0, 0.5);
+        /* خط توهج */
+        .glow-line {
+            height: 1px;
+            background: linear-gradient(90deg, 
+                        rgba(250, 204, 21, 0) 0%, 
+                        rgba(250, 204, 21, 0.3) 40%, 
+                        rgba(255, 255, 255, 0.7) 50%, 
+                        rgba(250, 204, 21, 0.3) 60%, 
+                        rgba(250, 204, 21, 0) 100%);
+            box-shadow: 0 0 10px 1px rgba(255, 215, 0, 0.4);
+            margin: 4px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 10px;
+            margin-top: 8px;
+            opacity: 0.85;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            position: relative;
+            z-index: 2;
         }
     </style>
 </head>
 <body>
-    <div class="menu-container">
-        <div class="menu-header">
-            <div class="menu-icon">🚗</div>
-            <div class="menu-title">Remote Car Controls 2</div>
+    <div class="help-box">
+        <!-- تأثير الموجة -->
+        <div class="wave-effect"></div>
+
+        <!-- العنوان -->
+        <div class="header">
+            <div class="title">Car Controls</div>
+            <div class="logo-wrapper">
+                <img src="https://raw.githubusercontent.com/NitWit123/carauction/refs/heads/main/c9996187afebc20c63fb6a7c05c97b22.png" alt="YAZAN Logo" class="logo">
+            </div>
+        </div>
+
+        <!-- خط توهج علوي -->
+        <div class="glow-line"></div>
+
+        <!-- عناصر التحكم -->
+        <div class="control">
+            <span>Drive</span>
+            <span class="key">WASD</span>
+        </div>
+        <div class="control">
+            <span>Brake</span>
+            <span class="key">Space</span>
+        </div>
+        <div class="control">
+            <span>Boost</span>
+            <span class="key">Shift</span>
+        </div>
+        <div class="control">
+            <span>Boom</span>
+            <span class="key">C</span>
+        </div>
+
+        <div class="control">
+            <span>Noclip</span>
+            <span class="key">F</span>
+        </div>
+        <div class="control">
+            <span>Fly Up</span>
+            <span class="key">SPACE</span>
         </div>
         
-        <div class="menu-items">
-            <div class="menu-item" data-action="drive">
-                <span class="item-label">Drive</span>
-                <span class="key-binding">WASD</span>
-            </div>
-            
-            <div class="menu-item selected" data-action="brake">
-                <span class="item-label">Brake</span>
-                <span class="key-binding">Space</span>
-            </div>
-            
-            <div class="menu-item" data-action="boost">
-                <span class="item-label">Boost</span>
-                <span class="key-binding">Shift</span>
-            </div>
-            
-            <div class="menu-item" data-action="camera">
-                <span class="item-label">Camera</span>
-                <span class="key-binding">G</span>
-            </div>
-            
-            <div class="menu-item" data-action="noclip">
-                <span class="item-label">Noclip</span>
-                <span class="key-binding">F</span>
-            </div>
-            
-            <div class="menu-item" data-action="fly-up">
-                <span class="item-label">Fly Up</span>
-                <span class="key-binding">Q</span>
-            </div>
-            
-            <div class="menu-item" data-action="fly-down">
-                <span class="item-label">Fly Down</span>
-                <span class="key-binding">Z</span>
-            </div>
-            
-            <div class="menu-item" data-action="repair">
-                <span class="item-label">Repair</span>
-                <span class="key-binding">R</span>
-            </div>
-            
-            <div class="menu-item" data-action="exit">
-                <span class="item-label">Exit</span>
-                <span class="key-binding">X</span>
-            </div>
+        <div class="control">
+            <span>Fly Down</span>
+            <span class="key">Ctrl</span>
         </div>
-        
-        <div class="menu-footer">
-            <span class="footer-text">● </span>
-            <span class="footer-key">F6</span>
-            <span class="footer-text"> to toggle</span>
+        <div class="control">
+            <span>Camera</span>
+            <span class="key">G</span>
         </div>
+        <div class="control">
+            <span>Repair</span>
+            <span class="key">R</span>
+        </div>
+        <div class="control">
+            <span>Exit</span>
+            <span class="key">X</span>
+        </div>
+
+        <!-- خط توهج سفلي -->
+        <div class="glow-line"></div>
+
+        <div class="footer">F6 to toggle</div>
     </div>
-
-    <script>
-        let selectedIndex = 1; // Start with "Brake" selected
-        const menuItems = document.querySelectorAll('.menu-item');
-
-        function updateSelection() {
-            menuItems.forEach((item, index) => {
-                if (index === selectedIndex) {
-                    item.classList.add('selected');
-                } else {
-                    item.classList.remove('selected');
-                }
-            });
-        }
-
-        function navigateUp() {
-            selectedIndex = selectedIndex > 0 ? selectedIndex - 1 : menuItems.length - 1;
-            updateSelection();
-        }
-
-        function navigateDown() {
-            selectedIndex = selectedIndex < menuItems.length - 1 ? selectedIndex + 1 : 0;
-            updateSelection();
-        }
-
-        function selectItem() {
-            const selectedItem = menuItems[selectedIndex];
-            const action = selectedItem.getAttribute('data-action');
-            
-            // Add visual feedback
-            selectedItem.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                selectedItem.style.transform = 'scale(1)';
-            }, 150);
-            
-            console.log(`Action executed: ${action}`);
-            // Here you would send the action to your Lua script
-            // sendNuiMessage('executeAction', { action: action });
-        }
-
-        // Keyboard controls
-        document.addEventListener('keydown', (e) => {
-            switch(e.key) {
-                case 'ArrowUp':
-                case 'w':
-                case 'W':
-                    e.preventDefault();
-                    navigateUp();
-                    break;
-                case 'ArrowDown':
-                case 's':
-                case 'S':
-                    e.preventDefault();
-                    navigateDown();
-                    break;
-                case 'Enter':
-                case ' ':
-                    e.preventDefault();
-                    selectItem();
-                    break;
-                case 'Escape':
-                case 'F6':
-                    e.preventDefault();
-                    console.log('Menu toggled');
-                    // sendNuiMessage('hideMenu');
-                    break;
-            }
-        });
-
-        // Mouse hover support
-        menuItems.forEach((item, index) => {
-            item.addEventListener('mouseenter', () => {
-                selectedIndex = index;
-                updateSelection();
-            });
-            
-            item.addEventListener('click', () => {
-                selectItem();
-            });
-        });
-
-        // Initialize
-        updateSelection();
-    </script>
 </body>
 </html>
